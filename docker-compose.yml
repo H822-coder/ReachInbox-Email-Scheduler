@@ -1,0 +1,24 @@
+
+services:
+  redis:
+    image: redis:7-alpine
+    container_name: email-redis
+    command: redis-server --appendonly yes --appendfsync everysec
+    ports:
+      - "6380:6379"
+    volumes:
+      - redis_data:/data
+    restart: unless-stopped
+
+  mongodb:
+    image: mongo:7
+    container_name: email-mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    restart: unless-stopped
+
+volumes:
+  redis_data:
+  mongo_data:
